@@ -1,6 +1,6 @@
 // create unsorted array
 A = [];
-A.size = 10;
+A.size = 10000;
 for (var i=1; i <= A.size; i++){
 	A.push(i);
 }
@@ -17,25 +17,32 @@ Bench.prototype.time = function(){return stop_time - start_time;};
 
 var A1 = A.slice();
 var bench = new Bench();
-console.log("Begin merge sort"); // + " on: " + A1.toString());
+console.log("Begin merge sort"); 
 bench.start();
 merge_sort(A1, 0, A1.length - 1);
 bench.stop();
 console.log("Took " + bench.time() + "ms "); // + A1.toString()
 
 var A2 = A.slice();
-console.log("Begin selection sort"); // + " on: " + A2.toString());
+console.log("Begin selection sort"); 
 bench.start();
 selection_sort(A2);
 bench.stop();
 console.log("Took " + bench.time() + "ms "); // + A2.toString());
 
 var A3 = A.slice();
-console.log("Begin insertion sort"); // + " on: " + A3.toString());
+console.log("Begin insertion sort"); 
 bench.start();
 insertion_sort(A3);
 bench.stop();
 console.log("Took " + bench.time() + "ms"); // + A3.toString());
+
+var A4 = A.slice();
+console.log("Begin bubble sort"); 
+bench.start();
+bubble_sort(A4);
+bench.stop();
+console.log("Took " + bench.time() + "ms"); // + A4.toString());
 
 // shuffle an array
 function shuffle(o){
@@ -81,7 +88,7 @@ function merge(A, f, m, l){
 	}
 }
 
-// selection sort
+// A: input array
 function selection_sort(A){
 	for (var i=0; i<A.length-1; i++){ // after 2nd last item, the last item will be swapped into right position
 		for (var j=i+1; j<A.length; j++){
@@ -95,7 +102,7 @@ function selection_sort(A){
 	}
 }
 
-// insertion in-place sort
+// in-place 
 function insertion_sort(A){
 	for (var j=1; j<A.length; j++){ // skip first item as it is in sorted subarray
 		var key = A[j];
@@ -108,4 +115,14 @@ function insertion_sort(A){
 	}
 }
 
-
+function bubble_sort(A){
+	for (var i=0; i<A.length-1; i++){	// after 2nd last item, last item will be swapped into right position
+		for (var j=A.length-1; j>i; j--){	// after each iteration, ith item will be in right place
+			if (A[j] < A[j-1]){
+				var tmp = A[j];
+				A[j] = A[j-1];
+				A[j-1] = tmp;
+			}
+		}
+	}
+}
